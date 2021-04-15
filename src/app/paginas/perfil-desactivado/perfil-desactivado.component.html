@@ -1,0 +1,20 @@
+<div class="container-fluid" *ngIf="authService.user | async as user">
+  <div class="row">
+    <div class="col-12">
+      <div class="jumbotron">
+        <h1 class="display-4"><i class="material-icons">person_add_disabled</i> Cuenta desactivada!</h1>
+        <p class="lead">Su cuenta ha sido desactivada<span *ngIf="!user.activo && !user.primerLogin"><b> permanentemente</b></span>.Por favor comuníquese con el administrador de su Edificio.</p>
+        <hr class="my-4">
+        <div *ngIf="user.primerLogin">
+        <p>Activar la cuenta del Usuario</p>
+        <p class="lead">
+          <mat-slide-toggle [(ngModel)]="user.activo" (click)="cambiarEstadoUsuario(user.uid, user.activo)">
+              <span *ngIf="user.activo">Activo</span>
+              <span *ngIf="!user.activo">Inactivo</span>
+            </mat-slide-toggle>
+        </p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

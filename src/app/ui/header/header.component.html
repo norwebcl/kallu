@@ -1,0 +1,50 @@
+<mat-toolbar [ngStyle]="{'background':'linear-gradient(135deg,#575656,#1d1d1d)'}">
+
+  <button mat-button style="color:#fff;" (click)="toggle()"> <i class="material-icons">menu</i> MENU </button>
+  <span class="app-toolbar-filler"></span>
+  <div *ngIf="authService.user | async as user">
+  
+    <button mat-button [matMenuTriggerFor]="menu1">
+    
+      <mat-icon style="color:#fff;" class="icono-boton">account_circle</mat-icon> &nbsp;
+      <span style="color:#fff;" *ngIf="authService.user | async as user">
+        {{ user.displayName | trim }}
+      </span>
+      <i class="material-icons icono-boton" style="color:#fff;">keyboard_arrow_down</i>
+    </button>
+    
+  </div>
+  <button mat-icon-button [matMenuTriggerFor]="menu1" style="color:#fff;margin-right:5px;"
+    *ngIf="!(authService.user | async)">
+    <i class="material-icons">person</i>
+  </button>
+  <mat-menu #menu1="matMenu" style="z-index:99!important;">
+    <div *ngIf="authService.user | async; then authenticated else guest">
+    </div>
+
+    <ng-template #authenticated>
+
+      <div *ngIf="authService.user | async as user">
+        <app-modo></app-modo>
+        <button mat-menu-item *ngIf="user" (click)="salir()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+
+    </ng-template>
+
+    <ng-template #guest>
+      <button mat-menu-item *ngIf="!user" routerLink="/iniciosesion">
+        <mat-icon>person</mat-icon>
+        <span> Iniciar Sesión</span>
+      </button>
+      <button mat-menu-item *ngIf="!user" routerLink="/recuperarcont">
+        <mat-icon>error</mat-icon>
+        <span>Olvidó su Contraseña?</span>
+      </button>
+    </ng-template>
+
+  </mat-menu>
+</mat-toolbar>
+

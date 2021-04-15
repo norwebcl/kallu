@@ -1,0 +1,273 @@
+<mat-toolbar color="accent">
+  <span>
+    <mat-icon class="icono-titulo">group_add</mat-icon> Agregar Usuario
+  </span>
+</mat-toolbar>
+
+<br>
+
+<div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+          <mat-card>
+            <h4 style="color:grey">
+              <mat-icon class="mat-18">person</mat-icon> Datos Personales
+            </h4>
+            <form [formGroup]="formulario" (ngSubmit)="agregar()" novalidate>
+              <mat-card-content>
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="example-container">
+                      <mat-form-field>
+                        <input matInput placeholder="Nombre y Apellido" type="text" formControlName="displayName"
+                          required autofocus>
+                        <mat-error *ngIf="formErrores.displayName">{{formErrores.displayName}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="example-container">
+                      <mat-form-field>
+                        <input matInput type="email" placeholder="Correo" formControlName="correo" required>
+                        <mat-error *ngIf="formErrores.correo">{{formErrores.correo}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="example-container">
+                      <mat-form-field>
+                        <input matInput type="text" placeholder="RUT/DNI/Pasaporte (sin puntos ni guión)"
+                          formControlName="rut" minlength="6" maxlength="20" required>
+                        <mat-error *ngIf="formErrores.rut">{{formErrores.rut}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="example-container">
+                      <mat-form-field>
+                        <mat-select placeholder="Tipo de Usuario" formControlName="tipo">
+                          <mat-option value="Estudiante">
+                            Estudiante
+                          </mat-option>
+                          <mat-option value="Profesor">
+                            Profesor
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="example-container">
+                      <mat-form-field>
+                        <mat-select placeholder="Pais de Residencia" formControlName="pais">
+                          <mat-option *ngFor="let pais of paises" [value]="pais">
+                            {{ pais }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
+                <h4 style="color:grey">
+                  <mat-icon class="mat-18">videocam</mat-icon> Datos de Contacto Videoconferencia
+                </h4>
+
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="example-container">
+                      <mat-form-field>
+                        <input matInput type="text" placeholder="Skype" formControlName="skype">
+                        <mat-error *ngIf="formErrores.skype">{{formErrores.skype}}</mat-error>
+                        <span matPrefix style="padding-right:10px;color:#00AFF0;"><i class="fab fa-skype"></i></span>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="example-container">
+                      <mat-form-field>
+                        <input matInput type="text" placeholder="Hangouts" formControlName="hangouts">
+                        <mat-error *ngIf="formErrores.hangouts">{{formErrores.hangouts}}</mat-error>
+                        <span matPrefix style="padding-right:10px;color:#129656;"><i class="fab fa-google"></i></span>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
+                <div *ngIf="checkUsuario()">
+                  <h4 style="color:grey">
+                    <mat-icon class="mat-18">access_time</mat-icon> Disponibilidad de Horario
+                  </h4>
+                  <div class="row">
+                    <div class="col-12 col-md-3">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <span matPrefix>De &nbsp;</span>
+                          <mat-select placeholder="Día" formControlName="dia_uno">
+                            <mat-option value="Lunes">
+                              Lunes
+                            </mat-option>
+                            <mat-option value="Martes">
+                              Martes
+                            </mat-option>
+                            <mat-option value="Miercoles">
+                              Miércoles
+                            </mat-option>
+                            <mat-option value="Jueves">
+                              Jueves
+                            </mat-option>
+                            <mat-option value="Viernes">
+                              Viernes
+                            </mat-option>
+                            <mat-option value="Sabado">
+                              Sábado
+                            </mat-option>
+                            <mat-option value="Domingo">
+                              Domingo
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <span matPrefix>&nbsp;a&nbsp;</span>
+
+                          <mat-select placeholder="Día" formControlName="dia_dos">
+                            <mat-option value="Lunes">
+                              Lunes
+                            </mat-option>
+                            <mat-option value="Martes">
+                              Martes
+                            </mat-option>
+                            <mat-option value="Miercoles">
+                              Miércoles
+                            </mat-option>
+                            <mat-option value="Jueves">
+                              Jueves
+                            </mat-option>
+                            <mat-option value="Viernes">
+                              Viernes
+                            </mat-option>
+                            <mat-option value="Sabado">
+                              Sábado
+                            </mat-option>
+                            <mat-option value="Domingo">
+                              Domingo
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <span matPrefix>De &nbsp;</span>
+                          <input matInput formControlName="hora_uno" type="time"
+                          placeholder="Hora Inicio" min="00:00" max="24:00">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <span matPrefix>a &nbsp;</span>
+                          <span matSuffix>&nbsp;Horas</span>>
+                          <input matInput formControlName="hora_dos" type="time"
+                          placeholder="Hora Fin" min="00:00" max="24:00">
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <hr>
+
+                  <h4 style="color:grey">
+                    <mat-icon class="mat-18">edit</mat-icon> Biografía o Cualificaciones
+                  </h4>
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="example-container">
+                        <mat-form-field floatLabel="never">
+                          <textarea formControlName="texto" matInput #texto placeholder="Biografía o Cualificaciones"
+                            matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="10"></textarea>
+                          <mat-hint align="end">{{texto.value.length}} / 1000</mat-hint>
+                          <mat-error *ngIf="texto.value.length > 1000">Máximo 1000 caracteres.</mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div *ngIf="!checkUsuario()">
+                  <h4 style="color:grey">
+                    <mat-icon class="mat-18">bookmark</mat-icon> Datos del Plan
+                  </h4>
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <mat-select placeholder="Tipo de Plan" formControlName="plan">
+                            <mat-option value="Silver">
+                              Plan Silver
+                            </mat-option>
+                            <mat-option value="Gold">
+                              Plan Oro
+                            </mat-option>
+                            <mat-option value="Platinum">
+                              Plan Platinum
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <hr>
+
+                  <h4 style="color:grey">
+                    <mat-icon class="mat-18">school</mat-icon> Accesos Burlington English
+                  </h4>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <input matInput type="text" placeholder="Usuario" formControlName="burn_user">
+                          <span matPrefix style="padding-right:10px;"><i class="fas fa-user"></i></span>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="example-container">
+                        <mat-form-field>
+                          <input matInput type="text" placeholder="Contraseña" formControlName="burn_password">
+                          <span matPrefix style="padding-right:10px;"><i class="fas fa-lock"></i></span>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </mat-card-content>
+              <mat-card-actions align="end" style="margin-bottom:-20px;margin-right: 5px;">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!formulario.valid"><i
+                    class="material-icons icono-boton">group_add</i> Agregar Usuario</button>
+              </mat-card-actions>
+            </form>
+          </mat-card>
+        </div>
+      </div>
+</div>

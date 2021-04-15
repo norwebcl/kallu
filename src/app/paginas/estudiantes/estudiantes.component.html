@@ -1,0 +1,87 @@
+<mat-toolbar color="accent">
+  <span><i class="material-icons icono-titulo">school</i> &nbsp; Estudiantes</span>
+  <span class="app-toolbar-filler"></span>
+  <button mat-raised-button color="primary" routerLink="/agregar-usuario">
+    <mat-icon class="icono-boton">person_add</mat-icon> Agregar
+  </button>
+</mat-toolbar>
+
+<br>
+
+<div class="container-fluid" *ngIf="usuarios$ | async as usuarios">
+  <div class="row">
+
+    <div class="col-12 col-md-6" *ngFor="let usuario of filtrarEstudiantes(usuarios) | ordenar: 'fecha_creacion' | reverse | slice:0:this.maxUsuarios trackBy: itemTrackBy;">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>
+            {{usuario.displayName}} ({{usuario.email}})
+          </mat-card-title>
+          <mat-card-subtitle class="small" style="margin-top:-15px;">
+            RUT/Pasaporte/DNI: {{usuario.rut}}
+          </mat-card-subtitle>
+          <span class="app-toolbar-filler"></span>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="eliminarUsuario(usuario.uid)">
+            <i class="material-icons icono-boton">delete</i> Eliminar</button>
+        </mat-menu>
+
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <mat-icon mat-list-icon>add_location</mat-icon>
+              <h5 mat-line>{{usuario.pais}}</h5>
+              <p mat-line>País de Residencia </p>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon mat-list-icon>person_add</mat-icon>
+              <h5 mat-line>{{usuario.fecha_creacion | amDateFormat:'LL' }}</h5>
+              <p mat-line>Fecha Registro </p>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon mat-list-icon>school</mat-icon>
+              <h5 mat-line>Plan {{usuario.plan}}</h5>
+              <p mat-line>Plan de Estudios</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <h3 mat-subheader>Accesos Burnlington English</h3>
+            <mat-list-item>
+              <mat-icon mat-list-icon>person</mat-icon>
+              <p mat-line>Usuario: {{usuario.burn_password}}</p>
+              <p mat-line> Contraseña: {{usuario.burn_user}}</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+          </mat-list>
+
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-icon-button matTooltip="Hangouts: {{usuario.hangouts}}"><i style="color:#129656"
+              class="fab fa-google"></i> </button>
+          <button mat-icon-button matTooltip="Skype: {{usuario.skype}}"><i style="color:#00AFF0"
+              class="fab fa-skype"></i> </button>
+        </mat-card-actions>
+      </mat-card>
+      <br>
+    </div>
+
+    <div class="col-12" *ngIf="filtrarEstudiantes(usuarios)?.length === 0 && carga_finalizada">
+      <div class="alert alert-warning" role="alert">
+        <i class="material-icons icono-titulo">person</i> No se encontraron estudiantes.
+      </div>
+    </div>
+    <div class="col-12 text-center" *ngIf="usuarios?.length > this.maxUsuarios ">
+      <br>
+      <button mat-button (click)="cargarMas()"><i class="material-icons icono-boton">group</i> Cargar más usuarios
+        <span class="badge badge-primary">{{ usuarios?.length - this.maxUsuarios }}</span>
+      </button>
+    </div>
+
+  </div>
+</div>

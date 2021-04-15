@@ -1,0 +1,58 @@
+<img src="assets/wallpaper.jpg" id="bg" alt="KALLU">
+
+<div class="container-fluid">
+  <div class="row justify-content-center" style="padding-top: 100px;">
+    <div class="col-xs-10 col-sm-10 col-mat-8 col-lg-6 col-xl-6">
+      <div class="card">
+        <div class="card-header" style="background:linear-gradient(135deg,#7a82c8,#2d4293);
+        color:#fff;">
+          <mat-icon class="icono-titulo">person</mat-icon> Iniciar Sesión
+        </div>
+        <form [formGroup]="formulario" (ngSubmit)="enviar()">
+          <div class="card-body">
+
+            <h4 class="text-center">
+              Bienvenidos a KALLU The Language Company</h4>
+            <p class="text-center">
+              Aplicación Web para Estudiantes y Profesores
+            </p>
+
+            <div class="alert alert-warning" role="alert">
+              <small> <mat-icon class="icono-titulo">lock</mat-icon> Ingrese su Email y Contraseña para iniciar sesión.</small>
+            </div>
+
+        
+            <div class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="Correo Electrónico" type="email" formControlName="email" required
+                  autofocus>
+                <span matPrefix><i class="material-icons icono-boton" style="color:grey">email</i> &nbsp;</span>
+                <mat-error *ngIf="formErrores.email">{{formErrores.email}}</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Contraseña" [type]="hide ? 'password' : 'text'" formControlName="password"
+                  required>
+                <i class="material-icons" style="color:grey;" matSuffix
+                  (click)="hide=!hide">{{ hide ? 'visibility' : 'visibility_off' }}</i>
+                <span matPrefix><i class="material-icons" style="color:grey">lock</i> &nbsp;</span>
+              </mat-form-field>
+
+            </div>
+            <button class="boton" type="submit" mat-raised-button color="accent" [disabled]="!formulario.valid"
+              *ngIf="!cargando">
+              <i class="icono-boton material-icons">person</i> Iniciar sesión</button>
+            <button class="boton" type="submit" mat-raised-button color="accent" disabled *ngIf="cargando">
+              <i class='fa fa-circle-o-notch fa-spin'></i> Autenticando usuario...</button>
+
+            <p [class]="this.clase" role="alert" *ngIf="mensaje">
+              <span [class]="this.icono" aria-hidden="true"></span>
+              {{this.mensaje}}
+            </p>
+
+          </div>
+        </form>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>

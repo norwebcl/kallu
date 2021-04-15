@@ -1,0 +1,346 @@
+<mat-toolbar color="accent">
+  <span><i class="material-icons icono-titulo">videocam</i> &nbsp; Clases Virtuales</span>
+  <span class="app-toolbar-filler"></span>
+</mat-toolbar>
+
+<br>
+
+<div class="container-fluid" *ngIf="clases$ | async as clases">
+  <div class="row">
+    <div class="col-12">
+
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="material-icons icono-titulo">videocam</i> Solicitudes
+          </ng-template>
+
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12 col-md-8"
+                *ngFor="let clase of filtrarSolicitudes(clases) | ordenar: 'fecha_creacion' | slice:0:this.maxClases; trackBy: itemTrackBy;">
+                <br>
+                <div class="ribbon2">
+                  <span>SOLICITUD</span>
+                </div>
+                <mat-card>
+                  <mat-card-title>
+                    <i style="padding-left:30px;" class="material-icons icono-titulo">videocam</i>
+                    <span *ngIf="this.usuario.tipo=='Estudiante'">
+                      Has enviado una solicitud de clase virtual al profesor
+                      {{ (clase.profesorRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Profesor'">
+                      Tienes una solicitud de clase virtual con el estudiante
+                      {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Admin'">
+                      El estudiante {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }} ha solicitado una
+                      clase virtual al profesor {{ (clase.profesorRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                  </mat-card-title>
+                  <mat-card-content>
+                    <h6 style="color:grey; padding-left:30px;">
+                      Detalles Clase Virtual
+                    </h6>
+                    <div class="row">
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>date_range</mat-icon>
+                            <h5 mat-line>{{clase.fecha_clase | amDateFormat:'LL' }}</h5>
+                            <p mat-line>Fecha de la Clase Virtual</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>access_time</mat-icon>
+                            <h5 mat-line>{{clase.hora_clase}}</h5>
+                            <p mat-line>Hora de la Clase</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                  <mat-divider></mat-divider>
+                  <mat-card-actions align="end">
+                    <button *ngIf="this.usuario.tipo=='Profesor'" mat-raised-button color="primary"
+                      (click)="aceptar(clase)" style="margin-right:20px;background:green"><i
+                        class="material-icons icono-boton">check</i>
+                      Aceptar</button>
+                    <button mat-raised-button (click)="cancelar(clase)" style="margin-right:20px;"><i
+                        class="material-icons icono-boton">close</i> Cancelar</button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              <div class="col-12" *ngIf="filtrarSolicitudes(clases)?.length === 0 && carga_finalizada">
+                <br>
+                <div class="alert alert-warning" role="alert">
+                  <i class="material-icons icono-titulo">videocam</i> No se encontraron solicitudes de clases virtuales.
+                </div>
+              </div>
+              <div class="col-12 text-center" *ngIf="filtrarSolicitudes(clases)?.length > this.maxClases ">
+                <br>
+                <button mat-button (click)="cargarMas()"><i class="material-icons icono-boton">group</i> Cargar más
+                  clases
+                  <span class="badge badge-primary">{{ filtrarSolicitudes(clases)?.length - this.maxClases }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+
+          <ng-template mat-tab-label>
+            <i class="material-icons icono-titulo">group</i> Agendadas
+          </ng-template>
+
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12 col-md-8"
+                *ngFor="let clase of filtrarAgendadas(clases) | ordenar: 'fecha_creacion' | slice:0:this.maxClases; trackBy: itemTrackBy;">
+                <br>
+                <div class="ribbon">
+                  <span>AGENDADA</span>
+                </div>
+                <mat-card>
+                  <mat-card-title>
+                    <i style="padding-left:30px;" class="material-icons icono-titulo">group</i>
+                    <span *ngIf="this.usuario.tipo=='Estudiante'">
+                      Tienes agendada una clase virtual con el profesor
+                      {{ (clase.profesorRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Profesor'">
+                      Tienes agendada una clase virtual con el estudiante
+                      {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Admin'">
+                      El estudiante {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }} ha agendado una
+                      clase virtual con el profesor {{ (clase.profesorRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                  </mat-card-title>
+                  <mat-card-content>
+                    <h6 style="color:grey;padding-left:30px;">
+                      Detalles Clase Virtual
+                    </h6>
+                    <div class="row">
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>date_range</mat-icon>
+                            <h5 mat-line>{{clase.fecha_clase | amDateFormat:'LL' }}</h5>
+                            <p mat-line>Fecha de la Clase Virtual</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>access_time</mat-icon>
+                            <h5 mat-line>{{clase.hora_clase}}</h5>
+                            <p mat-line>Hora de la Clase</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <i class="fab fa-skype" style="color:#00AFF0" mat-list-icon></i>
+                            <h5 *ngIf="this.usuario.tipo=='Profesor'" mat-line>
+                              {{(clase.estudianteRef | doc | async)?.skype }}</h5>
+                            <h5 *ngIf="this.usuario.tipo=='Estudiante'" mat-line>
+                              {{(clase.profesorRef | doc | async)?.skype }}</h5>
+                            <p mat-line>Usuario de Skype</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <i class="fab fa-google" style="color:#129656" mat-list-icon></i>
+                            <h5 *ngIf="this.usuario.tipo=='Profesor'" mat-line>
+                              {{(clase.estudianteRef | doc | async)?.hangouts}}</h5>
+                            <h5 *ngIf="this.usuario.tipo=='Estudiante'" mat-line>
+                              {{(clase.profesorRef | doc | async)?.hangouts}}</h5>
+                            <p mat-line>Usuario de Hangouts</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                  <mat-divider></mat-divider>
+                  <mat-card-actions align="end">
+                    <button mat-raised-button color="primary" (click)="realizada(clase)" style="margin-right:20px;"><i
+                        class="material-icons icono-boton">check</i> Clase Virtual Realizada</button>
+                    <button mat-raised-button (click)="cancelar(clase)" style="margin-right:20px;"><i
+                        class="material-icons icono-boton">close</i> Clase Virtual Cancelada</button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              <div class="col-12" *ngIf="filtrarAgendadas(clases)?.length === 0 && carga_finalizada">
+                <br>
+                <div class="alert alert-warning" role="alert">
+                  <i class="material-icons icono-titulo">videocam</i> No se encontraron clases virtuales agendadas.
+                </div>
+              </div>
+              <div class="col-12 text-center" *ngIf="filtrarAgendadas(clases)?.length > this.maxClases ">
+                <br>
+                <button mat-button (click)="cargarMas()"><i class="material-icons icono-boton">group</i> Cargar más
+                  clases
+                  <span class="badge badge-primary">{{ filtrarAgendadas(clases)?.length - this.maxClases }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="material-icons icono-titulo">check</i> Finalizadas
+          </ng-template>
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12 col-md-8"
+                *ngFor="let clase of filtrarFinalizadas(clases) | ordenar: 'fecha_creacion' | slice:0:this.maxClases; trackBy: itemTrackBy;">
+                <br>
+                <div class="ribbon3">
+                  <span>FINALIZADA</span>
+                </div>
+                <mat-card>
+                  <mat-card-title>
+                    <i style="padding-left:30px;" class="material-icons icono-titulo">group</i>
+                    <span *ngIf="this.usuario.tipo=='Estudiante'">
+                      Estuviste en una clase virtual con el profesor
+                      {{ (clase.profesorRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Profesor'">
+                      Estuviste en una clase virtual con el estudiante
+                      {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Admin'">
+                      El estudiante {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }} realizó una clase
+                      virtual con el profesor {{ (clase.profesorRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                  </mat-card-title>
+                  <mat-card-content>
+                    <h6 style="color:grey;padding-left:30px;">
+                      Detalles Clase Virtual
+                    </h6>
+                    <div class="row">
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>date_range</mat-icon>
+                            <h5 mat-line>{{clase.fecha_clase | amDateFormat:'LL' }}</h5>
+                            <p mat-line>Fecha de la Clase Virtual</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>access_time</mat-icon>
+                            <h5 mat-line>{{clase.hora_clase}}</h5>
+                            <p mat-line>Hora de la Clase</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-12" *ngIf="filtrarFinalizadas(clases)?.length === 0 && carga_finalizada">
+                <br>
+                <div class="alert alert-warning" role="alert">
+                  <i class="material-icons icono-titulo">videocam</i> No se encontraron clases virtuales finalizadas.
+                </div>
+              </div>
+              <div class="col-12 text-center" *ngIf="filtrarFinalizadas(clases)?.length > this.maxClases ">
+                <br>
+                <button mat-button (click)="cargarMas()"><i class="material-icons icono-boton">group</i> Cargar más
+                  clases
+                  <span class="badge badge-primary">{{ filtrarFinalizadas(clases)?.length - this.maxClases }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="material-icons icono-titulo">videocam_off</i> Canceladas
+          </ng-template>
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-12 col-md-8"
+                *ngFor="let clase of filtrarCanceladas(clases) | ordenar: 'fecha_creacion' | slice:0:this.maxClases; trackBy: itemTrackBy;">
+                <br>
+                <div class="ribbon4">
+                  <span>CANCELADA</span>
+                </div>
+                <mat-card>
+                  <mat-card-title>
+                    <i style="padding-left:30px;" class="material-icons icono-titulo">group</i>
+                    <span *ngIf="this.usuario.tipo=='Estudiante'">
+                      Se canceló una clase virtual con el profesor
+                      {{ (clase.profesorRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Profesor'">
+                      Cancelaste la clase virtual con el estudiante
+                      {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }}
+                    </span>
+                    <span *ngIf="this.usuario.tipo=='Admin'">
+                      El profesor {{ (clase.profesorRef | doc | async)?.displayName | titlecase }} canceló la clase
+                      virtual con el estudiante {{ (clase.estudianteRef | doc | async)?.displayName | titlecase }}
+                    </span>
+
+                  </mat-card-title>
+                  <mat-card-content>
+                    <h6 style="color:grey;padding-left:30px;">
+                      Detalles Clase Virtual
+                    </h6>
+                    <div class="row">
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>date_range</mat-icon>
+                            <h5 mat-line>{{clase.fecha_clase | amDateFormat:'LL' }}</h5>
+                            <p mat-line>Fecha de la Clase Virtual</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                      <div class="col-6">
+                        <mat-list>
+                          <mat-list-item>
+                            <mat-icon mat-list-icon>access_time</mat-icon>
+                            <h5 mat-line>{{clase.hora_clase}}</h5>
+                            <p mat-line>Hora de la Clase</p>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-12" *ngIf="filtrarCanceladas(clases)?.length === 0 && carga_finalizada">
+                <br>
+                <div class="alert alert-warning" role="alert">
+                  <i class="material-icons icono-titulo">videocam</i> No se encontraron clases virtuales canceladas.
+                </div>
+              </div>
+              <div class="col-12 text-center" *ngIf="filtrarCanceladas(clases)?.length > this.maxClases ">
+                <br>
+                <button mat-button (click)="cargarMas()"><i class="material-icons icono-boton">group</i> Cargar más
+                  clases
+                  <span class="badge badge-primary">{{ filtrarCanceladas(clases)?.length - this.maxClases }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

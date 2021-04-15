@@ -1,0 +1,42 @@
+
+.example-full-width {
+    width: 100%;
+  }
+
+  .mat-list-icon {
+    color: gold;
+  }
+
+  .itemmenu{
+    color: black;
+    background: #fff;
+    border-bottom:1px solid rgba(0, 0, 0, 0.12);
+    border-top:1px solid rgba(0, 0, 0, 0.12);
+    border-left:1px solid rgba(0, 0, 0, 0.12);
+    border-right:1px solid rgba(0, 0, 0, 0.12);
+    margin-bottom: 5px;
+  }
+
+
+  .example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 80%;
+  }
+  
+  .example-right-align {
+    text-align: right;
+  }
+  
+  input.example-right-align::-webkit-outer-spin-button,
+  input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+  }
+  
+  input.example-right-align {
+    -moz-appearance: textfield;
+  }
+  

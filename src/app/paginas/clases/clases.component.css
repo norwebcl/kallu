@@ -1,0 +1,128 @@
+
+  .example-header-image {
+    background-image: url('../../../assets/user_google.jpg');
+    background-size: cover;
+  }
+
+  .example-card{
+    margin-bottom:20px;
+  }
+
+  mat-card{
+    border-radius: 25px;
+    margin-bottom: 20px;
+  }
+
+
+  .ribbon {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    height: 75px;
+    text-align: right;
+  }
+  
+  .ribbon span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  background: purple;
+  background: linear-gradient(79A70A 0%, 79A70A 100%);
+  position: absolute;
+  top: 19px;
+  left: -21px;
+  }
+
+  .ribbon2 {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    height: 75px;
+    text-align: right;
+  }
+  
+  .ribbon2 span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  background: green;
+  background: linear-gradient(79A70A 0%, 79A70A 100%);
+  position: absolute;
+  top: 19px;
+  left: -21px;
+  }
+
+
+  .ribbon3 {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    height: 75px;
+    text-align: right;
+  }
+  
+  .ribbon3 span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  background: blue;
+  background: linear-gradient(79A70A 0%, 79A70A 100%);
+  position: absolute;
+  top: 19px;
+  left: -21px;
+  }
+
+  .ribbon4 {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    height: 75px;
+    text-align: right;
+  }
+  
+  .ribbon4 span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  background: grey;
+  background: linear-gradient(79A70A 0%, 79A70A 100%);
+  position: absolute;
+  top: 19px;
+  left: -21px;
+  }

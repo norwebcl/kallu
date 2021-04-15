@@ -1,0 +1,106 @@
+<mat-toolbar color="accent">
+  <span>
+    <mat-icon class="icono-titulo">videocam</mat-icon> Solicitar Clase Virtual
+  </span>
+</mat-toolbar>
+
+<br>
+
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10">
+      <mat-card>
+        <h4 style="color:grey">
+          <mat-icon class="mat-18">person</mat-icon> Datos del Profesor
+        </h4>
+
+        <div class="row" *ngIf="profesor$ | async as profesor">
+          <div class="col-12 col-md-4">
+            <mat-list>
+              <h3 mat-subheader>Datos Personales</h3>
+              <mat-list-item>
+                <mat-icon mat-list-icon>person</mat-icon>
+                <h5 mat-line>{{profesor.displayName | titlecase }}</h5>
+                <p mat-line>Nombre </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon mat-list-icon>add_location</mat-icon>
+                <h5 mat-line>{{profesor.pais}}</h5>
+                <p mat-line>País de Residencia </p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-list>
+              <h3 mat-subheader>Datos de Contacto</h3>
+              <mat-list-item>
+                <i class="fab fa-skype" style="color:#00AFF0" mat-list-icon></i>
+                <h5 mat-line>{{profesor.skype}}</h5>
+                <p mat-line>Usuario de Skype</p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <i class="fab fa-google" style="color:#129656" mat-list-icon></i>
+                <h5 mat-line>{{profesor.hangouts}}</h5>
+                <p mat-line>Usuario de Hangouts</p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-list>
+              <h3 mat-subheader>Horario Disponible</h3>
+              <mat-list-item>
+                <mat-icon mat-list-icon>access_time</mat-icon>
+                <h5 mat-line>De {{profesor.dia_uno}} a {{profesor.dia_dos}}</h5>
+                <p mat-line> de {{profesor.hora_uno}} a {{profesor.hora_dos}} horas.</p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+        <div class="alert alert-warning" role="alert" *ngIf="!profesorId">
+          Ha ocurrido un error, vuelve atrás y selecciona nuevamente un profesor. </div>
+
+        <hr>
+        <form [formGroup]="formulario" (ngSubmit)="agregar()" novalidate>
+          <mat-card-content>
+            <h4 style="color:grey">
+              <mat-icon class="mat-18">access_time</mat-icon> Fecha y Hora de la Clase Virtual
+            </h4>
+            <div class="row">
+
+              <div class="col-12 col-md-6">
+                <div class="example-container">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" formControlName="fecha_clase" placeholder="Fecha" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="formErrores.fecha_clase">{{formErrores.fecha_clase}}</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="example-container">
+                  <mat-form-field>
+                    <span matSuffix>&nbsp; horas</span>
+                    <input matInput formControlName="hora_clase" type="time" placeholder="Hora" min="00:00" max="24:00" required>
+                    <mat-error *ngIf="formErrores.hora_clase">{{formErrores.hora_clase}}</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+            </div>
+
+
+          </mat-card-content>
+          <mat-card-actions align="end" style="margin-bottom:-20px;margin-right: 5px;" *ngIf="profesorId">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!formulario.valid"><i
+                class="material-icons icono-boton">videocam</i> Solicitar Clase Virtual</button>
+          </mat-card-actions>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+
+</div>

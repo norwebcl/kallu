@@ -1,0 +1,137 @@
+<mat-toolbar color="accent">
+  <span><i class="material-icons icono-titulo">security</i>Guardias</span>
+  <span class="app-toolbar-filler"></span>
+  <button mat-raised-button color="primary" routerLink="/agregar-usuario">
+    <mat-icon class="icono-boton">security</mat-icon> Agregar
+  </button>
+</mat-toolbar>
+
+<br>
+
+<div class="container-fluid" *ngIf="authService.user | async as user">
+  <div class="row justify-content-center">
+
+    <div class="col-12 col-md-8" *ngIf="user.supervisor">
+
+      <h4>
+        <mat-icon class="icono-titulo">security</mat-icon> Guardias
+      </h4>
+      <mat-list *ngIf="usuarios$ | async as usuarios">
+        <mat-list-item class="itemmenu" *ngFor="let usuario of filtrarGuardias(usuarios); trackBy: itemTrackBy">
+          <mat-icon mat-list-icon>security</mat-icon>
+
+          <mat-slide-toggle [(ngModel)]="usuario.activo" (click)="cambiarEstadoUsuario(usuario.uid, usuario.activo)">
+            <span *ngIf="usuario.activo">Activo</span>
+            <span *ngIf="!usuario.activo">Inactivo</span>
+          </mat-slide-toggle>
+          <h4 mat-line style="font-weight: bold">{{usuario.displayName | titlecase }}</h4>
+          <br>
+          <p mat-line class="example-container">
+            <mat-form-field>
+              <input matInput placeholder="Usuario" [value]="usuario.email" readonly>
+            </mat-form-field>
+          </p>
+          <p mat-line class="example-container">
+            <mat-form-field>
+              <input matInput placeholder="Contraseña" [value]="usuario.password"
+                [type]="esconder ? 'password' : 'text'" readonly>
+              <mat-icon matSuffix (click)="esconder = !esconder">{{esconder ? 'visibility' : 'visibility_off'}}
+              </mat-icon>
+            </mat-form-field>
+          </p>
+          <small mat-line style="color:darkgreen"> <i class="material-icons icono-titulo">access_time</i> Registro:
+            {{usuario.fecha_creacion | amDateFormat:'LL' }} {{usuario.fecha_creacion | amDateFormat: 'HH:mm'}}
+            ({{usuario.fecha_creacion | amTimeAgo }})</small>
+        </mat-list-item>
+
+      </mat-list>
+
+    </div>
+
+
+    <div class="col-12 col-md-8" *ngIf="user.admin">
+      <br>
+      <h4>
+        <mat-icon class="icono-titulo">star</mat-icon>Supervisores
+      </h4>
+
+      <mat-list *ngIf="usuarios$ | async as usuarios">
+        <mat-list-item class="itemmenu" *ngFor="let usuario of filtrarSupervisores(usuarios); trackBy: itemTrackBy">
+          <mat-icon mat-list-icon>person</mat-icon>
+    
+          <mat-slide-toggle [(ngModel)]="usuario.activo" (click)="cambiarEstadoUsuario(usuario.uid, usuario.activo)">
+            <span *ngIf="usuario.activo">Activo</span>
+            <span *ngIf="!usuario.activo">Inactivo</span>
+          </mat-slide-toggle>
+          <h4 mat-line style="font-weight: bold">{{usuario | titlecase }}</h4>
+          <br>
+          <p mat-line class="example-container">
+            <mat-form-field>
+              <input matInput placeholder="Usuario" [value]="usuario.email" readonly>
+            </mat-form-field>
+          </p>
+          <p mat-line class="example-container">
+            <mat-form-field>
+              <input matInput placeholder="Contraseña" [value]="usuario.password"
+                [type]="esconder ? 'password' : 'text'">
+              <mat-icon matSuffix (click)="esconder = !esconder">{{esconder ? 'visibility' : 'visibility_off'}}
+              </mat-icon>
+            </mat-form-field>
+          </p>
+          <small mat-line style="color:darkgreen"> <i class="material-icons icono-titulo">access_time</i> Registro:
+            {{usuario.fecha_creacion | amDateFormat:'LL' }} {{usuario.fecha_creacion | amDateFormat: 'HH:mm'}}
+            ({{usuario.fecha_creacion | amTimeAgo }})</small>
+        </mat-list-item>
+
+      </mat-list>
+
+
+    </div>
+
+    <div class="col-12 col-md-8" *ngIf="user.supervisor">
+      <br>
+      <h4>
+        <mat-icon class="icono-titulo">person</mat-icon>Usuarios
+      </h4>
+      <div *ngIf="usuarios$ | async as usuarios">
+        <mat-list>
+          <mat-list-item class="itemmenu"
+            *ngFor="let usuario of (filtrarUsuarios(usuarios) | slice:0:this.maxUsuarios); trackBy: itemTrackBy">
+            <mat-icon mat-list-icon>person</mat-icon>
+      
+            <mat-slide-toggle [(ngModel)]="usuario.activo" (click)="cambiarEstadoUsuario(usuario.uid, usuario.activo)">
+              <span *ngIf="usuario.activo">Activo</span>
+              <span *ngIf="!usuario.activo">Inactivo</span>
+            </mat-slide-toggle>
+            <h4 mat-line style="font-weight: bold">{{usuario.displayName | titlecase }}</h4>
+            <br>
+            <p mat-line class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="Usuario" [value]="usuario.email" readonly>
+              </mat-form-field>
+            </p>
+            <p mat-line class="example-container">
+              <mat-form-field>
+                <input matInput placeholder="Contraseña" [value]="usuario.password"
+                  [type]="esconder ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="esconder = !esconder">{{esconder ? 'visibility' : 'visibility_off'}}
+                </mat-icon>
+              </mat-form-field>
+            </p>
+            <small mat-line style="color:darkgreen"> <i class="material-icons icono-titulo">access_time</i> Registro:
+              {{usuario.fecha_creacion | amDateFormat:'LL' }} {{usuario.fecha_creacion | amDateFormat: 'HH:mm'}}
+              ({{usuario.fecha_creacion | amTimeAgo }})</small>
+          </mat-list-item>
+
+        </mat-list>
+
+        <div class="col-12 text-center" style="padding-bottom:80px;" *ngIf="usuarios?.length > this.maxUsuarios">
+          <button color="primary" mat-button (click)="cargarMas()">Cargar más usuarios... <span
+              class="badge badge-primary">{{ usuarios?.length - this.maxUsuarios }}</span></button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

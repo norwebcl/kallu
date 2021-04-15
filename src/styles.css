@@ -1,1 +1,238 @@
-/* You can add global styles to this file, and also import other style files */
+
+*{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .espacio{
+    margin-bottom: 64px;
+  }
+
+  .icono-boton{
+    font-size:18px;
+    margin-bottom:-2px;
+  }
+
+  button, button:hover, button:active   
+  {   
+   outline:0!important;
+  }
+  
+  a, a:active, a:hover{
+    text-decoration: none!important;
+    outline:0!important;
+  }
+
+
+.beta{
+  font-family: "Open Sans"!important;
+  font-size: 10px;
+  color: #f2f2f2;
+}
+
+.titulo{
+  font-family: 'Ubuntu'!important;
+  font-size: 18px;
+  color: #f2f2f2;
+}
+
+.beta-side{
+  font-family: "Open Sans"!important;
+  font-size: 10px;
+  color: green;
+}
+
+.titulo-side{
+  font-family: 'Ubuntu'!important;
+  font-size: 18px;
+  color: grey;
+}
+
+em {
+  color: white;
+  font-style: bold;
+  text-decoration: none;
+  background-color: green!important;
+
+}
+
+.ais-CurrentRefinements-item {
+  background-color: #8BC34A !important;
+}
+
+.ais-CurrentRefinements-reset {
+  background-color: #2E7D32!important;
+}
+
+.ais-CurrentRefinements-reset:hover {
+  background-color: darkgreen!important;
+}
+
+.ais-ClearRefinements-button{
+  background-color: #2E7D32!important;
+
+}
+.ais-ClearRefinements-button:hover{
+  background-color: darkgreen!important;
+
+}
+
+.app-toolbar-filler {
+  flex: 1 1 auto !important;
+}
+
+.icono-titulo{
+  font-size:18px;
+  vertical-align: middle;
+  padding: 0; 
+}
+
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+.modal-dialog {
+  padding-top: 30px!important;
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  z-index: 99999 !important;
+}
+
+.swiper-wrapper {
+  box-sizing: border-box;
+}
+
+
+.background-masker {
+  background: #fff;
+  position: absolute;
+}
+
+
+.background-masker.header-top,
+.background-masker.header-bottom,
+.background-masker.subheader-bottom {
+  top: 0;
+  left: 40px;
+  right: 0;
+  height: 10px;
+}
+
+.background-masker.header-left,
+.background-masker.subheader-left,
+.background-masker.header-right,
+.background-masker.subheader-right {
+  top: 10px;
+  left: 40px;
+  height: 8px;
+  width: 10px;
+}
+
+.background-masker.header-bottom {
+  top: 18px;
+  height: 6px;
+}
+
+.background-masker.subheader-left,
+.background-masker.subheader-right {
+  top: 24px;
+  height: 6px;
+}
+
+
+.background-masker.header-right,
+.background-masker.subheader-right {
+  width: auto;
+  left: 300px;
+  right: 0;
+}
+
+.background-masker.subheader-right {
+  left: 230px;
+}
+
+.background-masker.subheader-bottom {
+  top: 30px;
+  height: 10px;
+}
+
+.background-masker.content-top,
+.background-masker.content-second-line,
+.background-masker.content-third-line,
+.background-masker.content-second-end,
+.background-masker.content-third-end,
+.background-masker.content-first-end {
+  top: 40px;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+
+.background-masker.content-top {
+  height:20px;
+}
+
+.background-masker.content-first-end,
+.background-masker.content-second-end,
+.background-masker.content-third-end{
+  width: auto;
+  left: 380px;
+  right: 0;
+  top: 60px;
+  height: 8px;
+}
+
+.background-masker.content-second-line  {
+  top: 68px;
+}
+
+.background-masker.content-second-end {
+  left: 420px;
+  top: 74px;
+}
+
+.background-masker.content-third-line {
+  top: 82px;
+}
+
+.background-masker.content-third-end {
+  left: 300px;
+  top: 88px;
+}
+
+@keyframes placeHolderShimmer{
+  0%{
+      background-position: -468px 0
+  }
+  100%{
+      background-position: 468px 0
+  }
+}
+
+.animated-background {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 96px;
+  position: relative;
+}
+
+.timeline-item {
+  background: #fff;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+  border-radius: 3px;
+  padding: 8px;
+  padding-bottom: 100px;
+  margin: 0 auto;
+}

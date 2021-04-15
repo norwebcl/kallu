@@ -1,0 +1,13 @@
+
+  .example-header-image {
+    background-image: url('../../../assets/user_google.jpg');
+    background-size: cover;
+  }
+
+  .example-card{
+    margin-bottom:20px;
+  }
+
+  mat-card{
+    border-radius: 25px;
+  }
