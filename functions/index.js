@@ -60,9 +60,7 @@ async function registroNotiCorreo(email, displayName, password) {
     to: email,
   };
 
-  // The user subscribed to the newsletter.
   mailOptions.subject = `${displayName} has sido registrado correctamente en la App Web de KALLU The Language Company!`;
-  // mailOptions.html = `Hola ${displayName || ''}! <br><br> Te escribimos desde ${APP_NAME} para informarte que te has registrado correctamente en nuestra app. <br><br> Tus datos de acceso son: <br> Usuario: ${email} <br> Contraseña: ${password} <br> Link: <a href="https://app.kallu.cl">https://app.kallu.cl</a>  <br><br> Saludos desde el Equipo KALLU The Language Company!<br> <img style="width:100px;" src="cid:logo">`;
   mailOptions.html = `Dear ${displayName || ''}! <br><br> 
 
   Welcome to ${APP_NAME} <br> 
@@ -81,7 +79,7 @@ async function registroNotiCorreo(email, displayName, password) {
   mailOptions.attachments = [{
     filename: 'login-logo.png',
     path: 'https://kallu.cl/web/wp-content/login-logo.png',
-    cid: 'logo' //same cid value as in the html img src
+    cid: 'logo'
   }];
   await mailTransport.sendMail(mailOptions);
   console.log('Correo enviado correctamente a:', email);
